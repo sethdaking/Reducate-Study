@@ -11,7 +11,7 @@ function WelcomeBanner() {
         <Globe className="h-12 w-12 text-slate-300" /> {/* Icon in slate color */}
         <div className="text-center">
             <h2 className="font-bold text-3xl text-white">Hello, {user?.fullName}</h2>
-            <p className="text-slate-300">It's time to get started with your gamification process</p>
+            <p className="text-slate-300">It&apos;s time to get started with your gamification process</p>
         </div>
     </div>
   )
