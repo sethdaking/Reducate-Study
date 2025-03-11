@@ -1,15 +1,13 @@
-import { Geist, Geist_Mono } from "next/font/google";
+// app/layout.tsx
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
+import { Outfit } from "next/font/google";
+import Provider from "@/app/provider";
+import { Toaster} from "@/components/ui/sonner";
+import {ThemeProvider} from "@/components/ui/theme-provider"
+import DashboardHeader from "@/app/dashboard/_components/DashboardHeader"; // Import your header component
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -18,12 +16,32 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={outfit.className}>
+          <Provider>
+            {/* Dashboard Header */}
+            <div className="w-full">
+              <DashboardHeader />
+              {/* Content area where the children will go */}
+              <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="mt-5 p-10">
+                {children}
+            </div>
+            </ThemeProvider>
+            </div>
+          </Provider>
+
+
+
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
