@@ -4,6 +4,9 @@ import { db } from "@/configs/db"
 import { STUDY_MATERIAL_TABLE, STUDY_TYPE_CONTENT } from "@/configs/schema"
 import { NextResponse } from "next/server"
 
+export const maxDuration = 30; // 300 seconds (5 minutes)
+
+
 export async function POST(req) {
     try {
         const { courseId, topic, courseType, difficultyLevel, createdBy } = await req.json();
