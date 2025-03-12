@@ -1,6 +1,6 @@
 import { serve } from "inngest/next";
 import { inngest } from "../../../inngest/client";
-import { CreateNewUser, GenerateStudyTypeContent, GenerateNotes, helloWorld } from "@/inngest/functions";
+import { CreateNewUser, GenerateStudyTypeContent, GenerateNotes, helloWorld, generateCourse } from "@/inngest/functions";
 
 export const runtime = 'edge'
 // Create an API that serves zero functions
@@ -11,6 +11,7 @@ export const { GET, POST, PUT } = serve({
     helloWorld,
     CreateNewUser,
     GenerateNotes,
-    GenerateStudyTypeContent
+    GenerateStudyTypeContent,
+    generateCourse
   ],
 });
