@@ -304,7 +304,8 @@ export const GenerateStudyTypeContent = inngest.createFunction(
 
 
 export const studyMaterialCreate = inngest.createFunction(
-  { name: "study.material.create" },
+  { id: "study-material-create" },
+  { event: "study.material.create" },
   async ({ event }) => {
       const { courseId, topic, courseType, difficultyLevel, createdBy } = event.data;
 
