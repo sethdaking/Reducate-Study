@@ -48,56 +48,6 @@ export const CreateNewUser = inngest.createFunction(
 
 );
 
-export const generateCourseOutline = inngest.createFunction(
-  { name: "Generate Course Outline" },
-  { event: "outline.generate" },
-  async ({ event }) => {
-      const { courseId, topic, courseType, difficultyLevel, createdBy } = event.data;
-
-      if (!courseId || !topic || !courseType || !difficultyLevel || !createdBy) {
-          throw new Error("Missing required fields in event data");
-      }
-
-      const PROMPT = `Generate study material for ${topic} for ${courseType} 
-          with difficulty level ${difficultyLevel}. Include:
-          - Course summary
-          - List of chapters with summaries
-          - Emoji icon for each chapter
-          - Topic list for each chapter
-          - Study tips for each chapter
-          - Suggestions for further reading
-          - Sources you got it from
-          - Minimum of 6 chapters
-          - Last chapter is for review and practice questions and further tips
-          Format the response as valid JSON.`;
-
-      try {
-          const aiResponse = await courseOutline.sendMessage(PROMPT);
-          const aiResult = JSON.parse(aiResponse.response.text());
-
-          if (!aiResult.chapters || !Array.isArray(aiResult.chapters)) {
-              throw new Error("Invalid AI response structure");
-          }
-
-          const savedCourse = await db.insert(STUDY_MATERIAL_TABLE).values({
-              courseId,
-              createdBy,
-              courseType,
-              topic,
-              difficultyLevel,
-              courseLayout: aiResult,
-              status: "Generated"
-          }).returning();
-
-          return { success: true, result: savedCourse[0] };
-      } catch (error) {
-          console.error("AI Generation or Database Error:", error);
-          throw new Error("Failed to generate or save course content");
-      }
-  }
-);
-
-
 export const GenerateNotes = inngest.createFunction(
   { id: "generate-course" },
   { event: 'notes.generate' },
@@ -351,5 +301,3 @@ export const GenerateStudyTypeContent = inngest.createFunction(
     }
   }
 );
-
-
