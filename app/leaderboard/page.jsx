@@ -11,6 +11,7 @@ export default async function LeaderboardPage() {
     .select({
       user: QUIZ_RESULTS_TABLE.createdBy,
       bestScore: sql`MAX(${QUIZ_RESULTS_TABLE.score})`.as("bestScore"),
+      avgScore: sql`ROUND(AVG(${QUIZ_RESULTS_TABLE.score}), 2)`.as("avgScore"),
     })
     .from(QUIZ_RESULTS_TABLE)
     .groupBy(QUIZ_RESULTS_TABLE.createdBy)
@@ -32,12 +33,13 @@ export default async function LeaderboardPage() {
               <TableHead>Rank</TableHead>
               <TableHead>User</TableHead>
               <TableHead>Best Score</TableHead>
+              <TableHead>Average Score</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {leaderboard.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={3} className="text-center py-8 text-gray-500">
+                <TableCell colSpan={4} className="text-center py-8 text-gray-500">
                   No quiz results found
                 </TableCell>
               </TableRow>
@@ -47,6 +49,7 @@ export default async function LeaderboardPage() {
                   <TableCell className="font-bold">#{index + 1}</TableCell>
                   <TableCell>{entry.user}</TableCell>
                   <TableCell>{entry.bestScore}%</TableCell>
+                  <TableCell>{entry.avgScore}%</TableCell>
                 </TableRow>
               ))
             )}

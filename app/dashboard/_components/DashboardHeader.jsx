@@ -5,7 +5,7 @@ import { MenuIcon, XIcon, LayoutDashboard, UserCircle } from "lucide-react"; // 
 import Link from "next/link";
 import { Button } from "@/components/ui/button"; // SHADCN Button
 import { usePathname } from "next/navigation"; // to manage active states
-import DarkModeToggle from "./Toggle"; // Import DarkModeToggle
+import { GiPodiumWinner } from "react-icons/gi";
 
 function DashboardHeader() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,6 +39,11 @@ function DashboardHeader() {
       icon: UserCircle,
       path: "/profile",
     },
+    {
+      name: "Leaderboard",
+      icon: GiPodiumWinner,
+      path: "/leaderboard",
+    }
   ];
 
   return (
