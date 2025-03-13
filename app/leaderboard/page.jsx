@@ -1,19 +1,18 @@
 import { db } from "@/configs/db";
 import { QUIZ_RESULTS_TABLE } from "@/configs/schema";
+import { sql } from "drizzle-orm"; // Import Drizzle's SQL helper
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 
 export default async function LeaderboardPage() {
-  // Fetch all users' best scores
-  const leaderboard = await db
-    .select({
-      user: QUIZ_RESULTS_TABLE.createdBy,
-      bestScore: QUIZ_RESULTS_TABLE.score.max(),
-    })
-    .from(QUIZ_RESULTS_TABLE)
-    .groupBy(QUIZ_RESULTS_TABLE.createdBy)
-    .orderBy(QUIZ_RESULTS_TABLE.score.max().desc());
+  // Fetch all users' best scores using Drizzle's SQL function
+  const leaderboard = await db.execute(sql`
+    SELECT created_by, MAX(score) AS best_score
+    FROM ${QUIZ_RESULTS_TABLE}
+    GROUP BY created_by
+    ORDER BY best_score DESC
+  `);
 
   return (
     <div className="container mx-auto p-8">
@@ -42,10 +41,10 @@ export default async function LeaderboardPage() {
               </TableRow>
             ) : (
               leaderboard.map((entry, index) => (
-                <TableRow key={entry.user}>
+                <TableRow key={entry.created_by}>
                   <TableCell className="font-bold">#{index + 1}</TableCell>
-                  <TableCell>{entry.user}</TableCell>
-                  <TableCell>{entry.bestScore}%</TableCell>
+                  <TableCell>{entry.created_by}</TableCell>
+                  <TableCell>{entry.best_score}%</TableCell>
                 </TableRow>
               ))
             )}
