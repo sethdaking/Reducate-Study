@@ -5,6 +5,7 @@ import { format, formatDistance } from "date-fns";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { eq, desc, sql } from "drizzle-orm";
+import Link from "next/link";
 
 export default async function QuizResultsPage() {
   // Get the current user from Clerk
