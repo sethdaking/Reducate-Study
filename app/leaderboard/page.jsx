@@ -1,23 +1,20 @@
 import { db } from "@/configs/db";
 import { QUIZ_RESULTS_TABLE } from "@/configs/schema";
-import { sql } from "drizzle-orm";
+import { desc, sql } from "drizzle-orm";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 
 export default async function LeaderboardPage() {
-  // Fetch all users' best scores and ensure it's an array
-  const leaderboard = await db.all(
-    sql`
-      SELECT created_by, MAX(score) AS best_score
-      FROM ${QUIZ_RESULTS_TABLE}
-      GROUP BY created_by
-      ORDER BY best_score DESC
-    `
-  );
-
-  // Ensure leaderboard is always an array
-  const leaderboardArray = Array.isArray(leaderboard) ? leaderboard : [];
+  // Fetch leaderboard data
+  const leaderboard = await db
+    .select({
+      user: QUIZ_RESULTS_TABLE.createdBy,
+      bestScore: sql`MAX(${QUIZ_RESULTS_TABLE.score})`.as("bestScore"),
+    })
+    .from(QUIZ_RESULTS_TABLE)
+    .groupBy(QUIZ_RESULTS_TABLE.createdBy)
+    .orderBy(desc("bestScore"));
 
   return (
     <div className="container mx-auto p-8">
@@ -38,18 +35,18 @@ export default async function LeaderboardPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {leaderboardArray.length === 0 ? (
+            {leaderboard.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={3} className="text-center py-8 text-gray-500">
                   No quiz results found
                 </TableCell>
               </TableRow>
             ) : (
-              leaderboardArray.map((entry, index) => (
-                <TableRow key={entry.created_by}>
+              leaderboard.map((entry, index) => (
+                <TableRow key={entry.user}>
                   <TableCell className="font-bold">#{index + 1}</TableCell>
-                  <TableCell>{entry.created_by}</TableCell>
-                  <TableCell>{entry.best_score}%</TableCell>
+                  <TableCell>{entry.user}</TableCell>
+                  <TableCell>{entry.bestScore}%</TableCell>
                 </TableRow>
               ))
             )}
