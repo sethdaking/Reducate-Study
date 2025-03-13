@@ -4,7 +4,7 @@ import { QUIZ_RESULTS_TABLE } from "@/configs/schema"; // Import your table sche
 import { format, formatDistance } from "date-fns";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { eq } from "drizzle-orm";
+import { eq, desc, sql } from "drizzle-orm";
 
 export default async function QuizResultsPage() {
   // Get the current user from Clerk
@@ -21,13 +21,13 @@ export default async function QuizResultsPage() {
   // Use the first email address as the identifier
   const userEmail = user.emailAddresses[0].emailAddress;
   
-  // Fetch quiz results from the database filtered by the current user's email in the createdBy column
+  // Fetch quiz results for the current user
   const results = await db
     .select()
     .from(QUIZ_RESULTS_TABLE)
     .where(eq(QUIZ_RESULTS_TABLE.createdBy, userEmail));
 
-  // Compute statistics based on the filtered results
+  // Compute user statistics
   const calculateStats = () => {
     if (!results.length) return { avgScore: 0, totalQuizzes: 0, bestScore: 0 };
 
@@ -43,9 +43,24 @@ export default async function QuizResultsPage() {
 
   const stats = calculateStats();
 
+  // Fetch leaderboard (top users by highest score)
+  const leaderboard = await db
+    .select({
+      user: QUIZ_RESULTS_TABLE.createdBy,
+      bestScore: sql`MAX(${QUIZ_RESULTS_TABLE.score})`.as("bestScore"),
+    })
+    .from(QUIZ_RESULTS_TABLE)
+    .groupBy(QUIZ_RESULTS_TABLE.createdBy)
+    .orderBy(desc("bestScore"))
+    .limit(5); // Show top 5 users
+
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold mb-8">Quiz Results</h1>
+
+      <Link href="/leaderboard" className="text-blue-500 hover:underline">
+          View Leaderboard →
+        </Link>
 
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -63,7 +78,41 @@ export default async function QuizResultsPage() {
         </Card>
       </div>
 
+      {/* Leaderboard */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Leaderboard</h2>
+        <Card className="overflow-hidden">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Rank</TableHead>
+                <TableHead>User</TableHead>
+                <TableHead>Best Score</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {leaderboard.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center py-8 text-gray-500">
+                    No leaderboard data available
+                  </TableCell>
+                </TableRow>
+              ) : (
+                leaderboard.map((entry, index) => (
+                  <TableRow key={entry.user}>
+                    <TableCell>#{index + 1}</TableCell>
+                    <TableCell>{entry.user}</TableCell>
+                    <TableCell className="text-green-600">{entry.bestScore}%</TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </Card>
+      </div>
+
       {/* Results Table */}
+      <h2 className="text-2xl font-semibold mb-4">Your Quiz History</h2>
       <Card className="overflow-hidden">
         <Table>
           <TableHeader>
