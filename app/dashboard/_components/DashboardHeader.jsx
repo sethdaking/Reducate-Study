@@ -36,7 +36,10 @@ function DashboardHeader() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <button className="flex items-center justify-center p-2 mr-10 bg-white" onClick={toggleSidebar}>
+            <button
+              className="flex items-center justify-center p-2 mr-10 bg-white"
+              onClick={toggleSidebar}
+            >
               {isOpen ? (
                 <XIcon className="h-6 w-6 text-gray-700" />
               ) : (
@@ -52,7 +55,9 @@ function DashboardHeader() {
             </SignedIn>
             <SignedOut>
               <SignInButton mode="modal">
-                <Button variant="outline" size="default">Sign In</Button>
+                <Button variant="outline" size="default">
+                  Sign In
+                </Button>
               </SignInButton>
             </SignedOut>
           </div>
@@ -84,27 +89,38 @@ function DashboardHeader() {
             </Link>
           ))}
           <Link href="/create" className="block p-2 mt-5">
-            <Button variant="outline" className="w-full">Create</Button>
+            <Button variant="outline" className="w-full">
+              Create
+            </Button>
           </Link>
+          <h2 className="text-lg font-bold text-gray-700 mt-5 text-center">
+            More Resources: 
+          </h2>
           <Link
             href="https://reducate-chat.vercel.app/servers/384334a4-0cdb-40b6-9fad-d8a9dca6cc83/channels/f1d4b884-b47d-4bd7-a280-b69d1b472f9f"
             target="_blank"
             className="block p-2 mt-2"
           >
-            <Button variant="outline" className="w-full">Join Study Chat</Button>
+            <Button variant="outline" className="w-full">
+              Join Study Chat
+            </Button>
           </Link>
           <Link
             href="https://reducate-study-two.vercel.app"
             target="_blank"
             className="block p-2 mt-2"
           >
-            <Button variant="outline" className="w-full">Join Study Chat</Button>
+            <Button variant="outline" className="w-full">
+              Join Study Chat
+            </Button>
           </Link>
         </div>
       </div>
 
       <div
-        className={`fixed inset-0 bg-black opacity-50 ${isOpen ? "block" : "hidden"} z-30`}
+        className={`fixed inset-0 bg-black opacity-50 ${
+          isOpen ? "block" : "hidden"
+        } z-30`}
         onClick={toggleSidebar}
       ></div>
     </header>
