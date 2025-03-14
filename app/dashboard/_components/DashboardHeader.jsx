@@ -98,7 +98,7 @@ function DashboardHeader() {
             More Resources: 
           </h2>
           <Link
-            href="https://reducate-chat.vercel.app/servers/384334a4-0cdb-40b6-9fad-d8a9dca6cc83/channels/f1d4b884-b47d-4bd7-a280-b69d1b472f9f"
+            href="https://reducate-chat.vercel.app/invite/9e498a7f-90a8-4bc7-8bcf-99a31e5281a1"
             target="_blank"
             className="block p-2 mt-2"
           >
