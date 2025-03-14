@@ -93,6 +93,13 @@ function DashboardHeader() {
           >
             <Button variant="outline" className="w-full">Join Study Chat</Button>
           </Link>
+          <Link
+            href="https://reducate-study-two.vercel.app"
+            target="_blank"
+            className="block p-2 mt-2"
+          >
+            <Button variant="outline" className="w-full">Join Study Chat</Button>
+          </Link>
         </div>
       </div>
 
