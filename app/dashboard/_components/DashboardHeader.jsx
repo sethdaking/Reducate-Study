@@ -93,6 +93,7 @@ function DashboardHeader() {
               Create
             </Button>
           </Link>
+
           <h2 className="text-lg font-bold text-gray-700 mt-5 text-center">
             More Resources: 
           </h2>
@@ -111,7 +112,7 @@ function DashboardHeader() {
             className="block p-2 mt-2"
           >
             <Button variant="outline" className="w-full">
-              Join Study Chat
+              Video Courses
             </Button>
           </Link>
         </div>
