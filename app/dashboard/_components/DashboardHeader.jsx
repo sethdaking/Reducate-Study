@@ -107,7 +107,7 @@ function DashboardHeader() {
             </Button>
           </Link>
           <Link
-            href="https://reducate-study-two.vercel.app"
+            href="https://nextwave-reducate.vercel.app/"
             target="_blank"
             className="block p-2 mt-2"
           >
