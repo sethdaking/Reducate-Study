@@ -8,14 +8,14 @@ import Link from "next/link";
 export default async function LeaderboardPage() {
   // Fetch leaderboard data
   const leaderboard = await db
-    .select({
-      user: QUIZ_RESULTS_TABLE.createdBy,
-      bestScore: sql`MAX(${QUIZ_RESULTS_TABLE.score})`.as("bestScore"),
-      avgScore: sql`ROUND(AVG(${QUIZ_RESULTS_TABLE.score}), 2)`.as("avgScore"),
-    })
-    .from(QUIZ_RESULTS_TABLE)
-    .groupBy(QUIZ_RESULTS_TABLE.createdBy)
-    .orderBy(desc("bestScore"));
+  .select({
+    user: QUIZ_RESULTS_TABLE.createdBy,
+    bestScore: sql`MAX(${QUIZ_RESULTS_TABLE.score})`.as("bestScore"),
+    avgScore: sql`ROUND(AVG(${QUIZ_RESULTS_TABLE.score}), 2)`.as("avgScore"),
+  })
+  .from(QUIZ_RESULTS_TABLE)
+  .groupBy(QUIZ_RESULTS_TABLE.createdBy)
+  .orderBy(desc(sql`MAX(${QUIZ_RESULTS_TABLE.score})`)); // Explicit ordering
 
   return (
     <div className="container mx-auto p-8">
