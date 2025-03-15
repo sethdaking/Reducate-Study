@@ -98,7 +98,7 @@ function DashboardHeader() {
             More Resources: 
           </h2>
           <Link
-            href="https://reducate-chat.vercel.app/invite/9e498a7f-90a8-4bc7-8bcf-99a31e5281a1"
+            href="https://reducate-chat.vercel.app/servers/9e498a7f-90a8-4bc7-8bcf-99a31e5281a1"
             target="_blank"
             className="block p-2 mt-2"
           >
@@ -113,6 +113,15 @@ function DashboardHeader() {
           >
             <Button variant="outline" className="w-full">
               Video Courses
+            </Button>
+          </Link>
+          <Link
+            href="https://nextwave-task.vercel.app/"
+            target="_blank"
+            className="block p-2 mt-2"
+          >
+            <Button variant="outline" className="w-full">
+              Join Study Chat
             </Button>
           </Link>
         </div>
