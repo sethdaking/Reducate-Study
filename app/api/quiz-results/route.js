@@ -15,7 +15,7 @@ export async function POST(req) {
     }
 
     // Use the first email address as createdBy
-    const createdBy = user.emailAddresses[0].emailAddress;
+    const createdBy = user.firstName
 
     // Parse the request body for courseId and results
     const { courseId, results } = await req.json();

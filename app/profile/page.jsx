@@ -20,13 +20,13 @@ export default async function QuizResultsPage() {
   }
   
   // Use the first email address as the identifier
-  const userEmail = user.emailAddresses[0].emailAddress;
+  const userName = user.firstName;
   
   // Fetch quiz results for the current user
   const results = await db
     .select()
     .from(QUIZ_RESULTS_TABLE)
-    .where(eq(QUIZ_RESULTS_TABLE.createdBy, userEmail));
+    .where(eq(QUIZ_RESULTS_TABLE.createdBy, userName));
 
   // Compute user statistics
   const calculateStats = () => {
@@ -46,14 +46,15 @@ export default async function QuizResultsPage() {
 
   // Fetch leaderboard (top users by highest score)
   const leaderboard = await db
-    .select({
-      user: QUIZ_RESULTS_TABLE.createdBy,
-      bestScore: sql`MAX(${QUIZ_RESULTS_TABLE.score})`.as("bestScore"),
-    })
-    .from(QUIZ_RESULTS_TABLE)
-    .groupBy(QUIZ_RESULTS_TABLE.createdBy)
-    .orderBy(desc("bestScore"))
-    .limit(5); // Show top 5 users
+  .select({
+    user: QUIZ_RESULTS_TABLE.createdBy, // This now refers to firstName instead of email
+    bestScore: sql`MAX(${QUIZ_RESULTS_TABLE.score})`.as("bestScore"),
+  })
+  .from(QUIZ_RESULTS_TABLE)
+  .groupBy(QUIZ_RESULTS_TABLE.createdBy)
+  .orderBy(desc("bestScore"))
+  .limit(5);
+
 
   return (
     <div className="container mx-auto p-8">
@@ -102,7 +103,7 @@ export default async function QuizResultsPage() {
                 leaderboard.map((entry, index) => (
                   <TableRow key={entry.user}>
                     <TableCell>#{index + 1}</TableCell>
-                    <TableCell>{entry.user}</TableCell>
+                    <TableCell>{entry.user || "Unknown User"}</TableCell>
                     <TableCell className="text-green-600">{entry.bestScore}%</TableCell>
                   </TableRow>
                 ))
