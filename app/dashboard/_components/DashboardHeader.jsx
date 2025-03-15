@@ -121,7 +121,7 @@ function DashboardHeader() {
             className="block p-2 mt-2"
           >
             <Button variant="outline" className="w-full">
-              Join Study Chat
+              Productivity Tools
             </Button>
           </Link>
         </div>
