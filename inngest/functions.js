@@ -204,6 +204,11 @@ export const GenerateStudyTypeContent = inngest.createFunction(
             7. Does not use "Question:" and "Explanation:" prefixes with emphasis
             8. Minimum of 25 Questions
             9. Does not include the letters in the text
+            10. Does not include the letters(A-D in the text)
+            11. Uses one pair of asteriks(*word*) NEVER MORE than that
+            12. Make the questions as challenging as possible
+            13. Make the options nuanced with subtle differences to increase difficulty and understanding
+            13. Make the questions REALLY HARD but based on the material provided
           `;
           response = await GenerateQuiz.sendMessage(prompt);
         } else if (studyType === "qna") {
