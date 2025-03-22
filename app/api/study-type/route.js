@@ -84,6 +84,7 @@ function formatText(text) {
         // Handle paragraphs with proper spacing
         .replace(/\n\n/g, '<br/>')
         // Remove excessive whitespace while preserving necessary spaces
-
+        .replace(/\s+/g, ' ')
+        .trim();
 }
 

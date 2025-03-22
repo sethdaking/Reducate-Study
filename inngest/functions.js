@@ -205,7 +205,7 @@ export const GenerateStudyTypeContent = inngest.createFunction(
             8. Minimum of 25 Questions
             9. Does not include the letters in the text
             10. Does not include the letters(A-D in the text)
-            11. Uses one pair of asteriks(*word*) NEVER MORE than that
+            11. Uses one pair of asteriks one before the word and one after the word (*word*) NEVER MORE than that
             12. Make the questions as challenging as possible
             13. Make the options nuanced with subtle differences to increase difficulty and understanding
             13. Make the questions REALLY HARD but based on the material provided
