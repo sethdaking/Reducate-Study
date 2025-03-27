@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "jsx": "react",
+    "baseUrl": ".",  // This should be the root folder of the project
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": ["./*"]  // Pointing to the root directory
+    },
+    "jsx": "react"
   }
 }

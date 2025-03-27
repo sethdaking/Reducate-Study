@@ -2,10 +2,9 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { Outfit } from "next/font/google";
-import Provider from "@/app/provider";
-import { Toaster} from "@/components/ui/sonner";
-import {ThemeProvider} from "@/components/ui/theme-provider"
-import DashboardHeader from "@/app/dashboard/_components/DashboardHeader"; // Import your header component
+import Provider from "./provider";
+import { Toaster} from "../components/ui/sonner";
+import DashboardHeader from "../app/dashboard/_components/DashboardHeader"; // Import your header component
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -24,16 +23,11 @@ export default function RootLayout({ children }) {
             <div className="w-full">
               <DashboardHeader />
               {/* Content area where the children will go */}
-              <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
+        
             <div className="mt-5 p-10">
                 {children}
             </div>
-            </ThemeProvider>
+            
             </div>
           </Provider>
 
