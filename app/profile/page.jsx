@@ -168,7 +168,7 @@ export default async function QuizResultsPage() {
         <h2 className="text-2xl font-semibold mb-4">Unachieved Badges 🏅</h2>
         <Card className="p-6">
           {unachievedBadges.length === 0 ? (
-            <p className="text-gray-500">You've earned all badges! Great job! 🎉</p>
+            <p className="text-gray-500">You&apos;ve earned all badges! Great job! 🎉</p>
           ) : (
             <div className="flex flex-wrap gap-4">
               {unachievedBadges.map((badge, index) => (
