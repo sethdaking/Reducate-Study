@@ -203,8 +203,8 @@ export const GenerateStudyTypeContent = inngest.createFunction(
             6. Is properly formatted as JSON
             7. Does not use "Question:" and "Explanation:" prefixes with emphasis
             8. Minimum of 25 Questions
-            9. Does not include the letters in the text
-            10. Does not include the letters(A-D in the text at the beginning of the answer)
+            9. Write understandable english for human beings with no errors
+            10. Does not include letters for the options in the text for the possible answers
             11. Uses <strong className='text-xl'> for emphasis in the question and anwer
             12. Make the questions as challenging as possible
             13. Make the options nuanced with subtle differences to increase difficulty and understanding
